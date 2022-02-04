@@ -28,4 +28,7 @@ public class ProduiService {
         return produitRepository.findById(id);
     }
 
+    public List<Produit> getProduitByDelivery(Long id) {
+        return produitRepository.findProduitByDelivery(id);
+    }
 }

@@ -32,6 +32,9 @@ import java.util.Date ;
 
     private float quantite; 
 
+    private Long delivery;
+
+
     @JsonFormat(pattern="yyyy-MM-dd") 
     private Date dateDeFabrication;
 

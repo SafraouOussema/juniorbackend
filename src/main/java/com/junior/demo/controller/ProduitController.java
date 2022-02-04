@@ -11,18 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;  
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/application")
 public class ProduitController {
 
-    
     @Autowired
     private ProduitRepository produitRepository;
 
@@ -31,13 +29,14 @@ public class ProduitController {
 
     @GetMapping("/produits")
     public ResponseEntity<List<Produit>> GetProduit() {
-        List<Produit> allProduitList =  null;
+        List<Produit> allProduitList = null;
         allProduitList = produitRepository.findAll();
         if (allProduitList.isEmpty())
             return ResponseEntity.noContent().build();
 
         return new ResponseEntity<>(allProduitList, HttpStatus.OK);
     }
+
     @GetMapping("/produit/{produitId}")
     public ResponseEntity<Optional<Produit>> getProduitById(@PathVariable long produitId) {
         Optional<Produit> produitList;
@@ -48,7 +47,17 @@ public class ProduitController {
         return new ResponseEntity<>(produitList, HttpStatus.OK);
 
     }
- 
+
+    @GetMapping("/produit/delivery/{deliveryCode}")
+    public ResponseEntity<List<Produit>> getProduitByDelivery(@PathVariable long deliveryCode) {
+        List<Produit> produitList;
+        produitList = produitService.getProduitByDelivery(deliveryCode);
+
+        if (produitList.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return new ResponseEntity<>(produitList, HttpStatus.OK);
+    }
 
     @PostMapping("/produit")
     public ResponseEntity<Produit> addProduit(@RequestBody Produit company) {
@@ -61,12 +70,10 @@ public class ProduitController {
 
     }
 
-
     @DeleteMapping("/produit/{produitId}")
     public ResponseEntity<Produit> deleteProduit(@PathVariable long produitId) {
         produitRepository.deleteById(produitId);
         return ResponseEntity.accepted().build();
     }
 
-    
 }
