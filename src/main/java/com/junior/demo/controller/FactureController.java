@@ -69,7 +69,7 @@ public class FactureController {
     }
 
 
-    @PostMapping("/webhook") // http://localhost:8080/api/webhook
+    @PostMapping("/webhook") //for test webhook http://localhost:8080/api/webhook
     public ResponseEntity<String> print(@RequestBody String requestBody) {
         System.out.println("###### Webhook #####" + requestBody);
         return new ResponseEntity<String >(requestBody, HttpStatus.OK);
