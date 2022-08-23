@@ -70,6 +70,23 @@ public class ProduitController {
 
     }
 
+    @PostMapping("/webhook") //for test webhook http://localhost:8080/api/webhook
+    public ResponseEntity<Produit> print(@RequestBody String requestBody) {
+
+        long id = 66666 ;
+        float fl = 0 ;
+
+        Produit produitLocal = null;
+      //  Produit produitTest = new Produit(id, requestBody, requestBody, fl, id, "2022-04-04", "2022-04-04");
+      Produit produitTest = new Produit();
+      produitTest.setName(requestBody);
+        produitLocal = produitRepository.save(produitTest);
+
+        if (produitLocal == null)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(produitLocal, HttpStatus.OK);
+    }
+
     @DeleteMapping("/produit/{produitId}")
     public ResponseEntity<Produit> deleteProduit(@PathVariable long produitId) {
         produitRepository.deleteById(produitId);
